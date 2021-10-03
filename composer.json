@@ -1,0 +1,17 @@
+{
+  "name": "ayesh/login_system_example",
+  "autoload": {
+    "psr-4": {
+      "app\\": "./"
+    }
+  },
+  "authors": [
+    {
+      "name": "Ayesh Vininda",
+      "email": "ayeshgk@gmail.com"
+    }
+  ],
+  "require": {
+    "ext-pdo": "*"
+  }
+}
