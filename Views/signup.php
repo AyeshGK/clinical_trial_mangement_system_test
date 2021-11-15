@@ -16,7 +16,7 @@ include_once '../core/helpers/session_helper.php'
 <!--    <button type="submit" name="submit">Sign up</button>-->
 <!--</form>-->
 
-<form action="/" method="post">
+<form action="/signup" method="post">
     <input type="hidden" name="type" value="register">
     <div class="mb-3">
         <label for="user_name" class="form-label">Full name</label>

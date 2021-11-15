@@ -44,23 +44,21 @@ class Router
         $callback = $this->routes[$method][$path] ?? false;
 
 
-
-
         if ($callback === false) {
             throw new NotFoundException();
         }
 
-        if (is_string($callback)) {
-            return $this->renderView($callback);
-        }
-
+//        if (is_string($callback)) {
+//            return $this->renderView($callback);
+//        }
+//
         echo '<pre>';
         var_dump($callback);
         echo '</pre>';
 
 
         if (is_array($callback)) {
-            $controller=new $callback[0]();
+            $controller = new $callback[0]();
             echo '<pre>';
             var_dump($controller);
             echo '</pre>';
@@ -74,25 +72,5 @@ class Router
         return call_user_func($callback, $this->request, $this->response);
     }
 
-    public function renderView(string $view): string
-    {
-        $layoutContent = $this->getLayoutContent();
-        $viewContent = $this->getView($view);
 
-        return str_replace('{{body-content}}', $viewContent, $layoutContent);
-    }
-
-    public function getView($view)
-    {
-        ob_start();
-        include_once "../Views/$view.php";
-        return ob_get_clean();
-    }
-
-    public function getLayoutContent($layout = 'main')
-    {
-        ob_start();
-        include_once "../Views/layouts/$layout.php";
-        return ob_get_clean();
-    }
 }

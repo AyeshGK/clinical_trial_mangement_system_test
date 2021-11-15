@@ -3,11 +3,14 @@
 namespace app\core;
 
 
+use app\core\exceptions\NotFoundException;
+use app\Http\Controllers\SiteController;
+
 class Application
 {
-    public Request $request;
-    public Response $response;
-    public Router $router;
+    private Request $request;
+    private Response $response;
+    private Router $router;
 
     public function __construct()
     {
@@ -17,13 +20,21 @@ class Application
         $this->router = new Router($this->request, $this->response);
     }
 
+    public function routing(): Router
+    {
+        return $this->router;
+    }
+
     public function run()
     {
         try {
             echo $this->router->resolve();
-        } catch (\Exception $error) {
+        } catch (NotFoundException $error) {
             $this->response->setStatusCode("404");
-            echo $this->router->renderView('notFound');
+            echo (new SiteController())->notFound();
+            echo $error;
+        } catch (\Exception $error) {
+            echo $error;
         }
     }
 }

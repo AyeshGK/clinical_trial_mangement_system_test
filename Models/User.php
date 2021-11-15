@@ -40,21 +40,34 @@ class User
         $sql = "INSERT INTO users (user_name,user_email,user_uid,user_pwd)
                 VALUES (:user_name,:user_email,:user_uid,:user_pwd)";
 
-        $this->db->query($sql);
-
         $user_data = [
             "user_name" => $this->user_name,
             "user_email" => $this->user_email,
             "user_uid" => $this->user_uid,
             "user_pwd" => $this->user_pwd,
         ];
-        $this->db->bindMultipleValues($user_data);
 
+        /*enter the data to database*/
+        try {
+            $this->db->query($sql);
+            $this->db->bindMultipleValues($user_data);
+            $this->db->execute();
 
-        $this->db->execute();
+            return true;
 
-        echo "successfully entered data" . '<br>';;
+        } catch (\PDOException $error) {
+            echo "ERROR " . $error->getMessage();
 
+            return false;
+        }
 
+//        echo "successfully entered data" . '<br>';;
+
+    }
+
+    public function validate(): bool
+    {
+        return $this->user_name && $this->user_email && $this->user_pwd &&
+            $this->user_pwd_repeat && $this->user_uid;
     }
 }

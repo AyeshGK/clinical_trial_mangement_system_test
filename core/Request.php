@@ -28,8 +28,12 @@ class Request
 
     public function getBody(): array
     {
-
-        $body = [];
+//        echo '<pre>';
+//        var_dump("ersdfsd");
+//        echo '</pre>';
+//        exit;
+//
+//        $body = [];
         if ($this->getMethod() === 'get')
             foreach ($_GET as $key => $value)
                 $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
