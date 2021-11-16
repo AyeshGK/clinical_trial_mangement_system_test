@@ -3,6 +3,7 @@
 namespace app\Http\Controllers;
 
 
+use app\core\Application;
 use app\core\BaseController;
 use app\core\Request;
 use app\Models\User;
@@ -27,14 +28,18 @@ class AuthController extends BaseController
             $user = new User();
             $user->setUserDetails($body);
 
-            echo $user->userName();
-
-            if ($user->validate() && $user->register()) {
-
+//            echo $user->userName();
+//
+            if ($user->validate() && $user->save()) {
+                Application::$app->redirect('\login');
+                exit;
             }
-        }
 
-        return "inside the auth controller";
+            return $this->renderView('signup', 'main', [
+                "user_model" => $user
+            ]);
+        }
+        return $this->renderView('signup', 'main');
     }
 
     public function logIn(): string

@@ -11,6 +11,7 @@ class Application
     private Request $request;
     private Response $response;
     private Router $router;
+    public static Application $app;
 
     public function __construct()
     {
@@ -18,11 +19,18 @@ class Application
         $this->response = new Response();
 
         $this->router = new Router($this->request, $this->response);
+
+        self::$app = $this;
     }
 
     public function routing(): Router
     {
         return $this->router;
+    }
+
+    public function redirect($url)
+    {
+        $this->response->redirect($url);
     }
 
     public function run()

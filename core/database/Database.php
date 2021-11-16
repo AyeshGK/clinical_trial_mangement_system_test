@@ -96,4 +96,15 @@ class Database
         }
 
     }
+
+    public function queryExecute($sql)
+    {
+        $this->dbh->exec($sql);
+    }
+
+    public function fetchAllColumns()
+    {
+        $this->stmt->execute();
+        return $this->stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
 }
