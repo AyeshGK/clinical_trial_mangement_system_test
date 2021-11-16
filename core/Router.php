@@ -52,16 +52,16 @@ class Router
 //            return $this->renderView($callback);
 //        }
 //
-        echo '<pre>';
-        var_dump($callback);
-        echo '</pre>';
+//        echo '<pre>';
+//        var_dump($callback);
+//        echo '</pre>';
 
 
         if (is_array($callback)) {
             $controller = new $callback[0]();
-            echo '<pre>';
-            var_dump($controller);
-            echo '</pre>';
+//            echo '<pre>';
+//            var_dump($controller);
+//            echo '</pre>';
 
 
 //            $controller->$$callback[1];

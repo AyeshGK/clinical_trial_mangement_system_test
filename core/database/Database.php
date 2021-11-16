@@ -7,10 +7,11 @@ use PDOException;
 
 class Database
 {
-    private string $host = 'localhost';
-    private string $user = 'root';
-    private string $dbname = 'login_system';
-
+    private string $host;
+    private string $user;
+    private string $dbname;
+    private string $dsn;
+    private string $password;
 
     private PDO $dbh;
     private $stmt;
@@ -19,14 +20,16 @@ class Database
 
     public function __construct()
     {
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
+        $this->setDbDetails();
+
+//        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
         $options = array(
             PDO::ATTR_PERSISTENT => true,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         );
 
         try {
-            $this->dbh = new PDO($dsn, $this->user, "root", $options);
+            $this->dbh = new PDO($this->dsn, $this->user, $this->password, $options);
         } catch (PDOException $error) {
             $this->error = $error->getMessage();
             echo $this->error;
@@ -39,6 +42,17 @@ class Database
     public function getDbh(): PDO
     {
         return $this->dbh;
+    }
+
+    public function setDbDetails()
+    {
+
+        $this->host = 'localhost';
+        $this->dsn = $_ENV['DB_DSN'];
+        $this->dbname = $_ENV['DB_USER'];
+        $this->user = $_ENV['DB_USER'];
+        $this->password = $_ENV['DB_PASSWORD'];
+
     }
 
     public function query($sql)
